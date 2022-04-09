@@ -11,7 +11,7 @@ namespace WindowsFormsApp1
     {
         static DateTime date = DateTime.Now;
         string date_str = date.ToString("dd/MM/yyyy"); //CURRENT SYSTEM DATE
-        SqlConnection sqlcon = new SqlConnection(connectionString: "Data Source=CBSEPAT\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
+        SqlConnection sqlcon = new SqlConnection(connectionString: "Data Source=COMP2\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
         public HE_letter()
         {
             InitializeComponent();
@@ -22,29 +22,29 @@ namespace WindowsFormsApp1
             sqlcon.Open();
             SqlCommand cmd = new SqlCommand("", sqlcon);
             SqlCommand cmd2 = new SqlCommand("", sqlcon);
-            string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "EXM2021FINAL");
-            string database2 = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "HE2021");
+            //string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "exm2021c");
+            //string database2 = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "hepat2021c");
             if (String.IsNullOrEmpty(textBox4.Text))
             {
-                cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database2 + "]", sqlcon);
+                cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[HEPAT2021C]", sqlcon);
             }
             else
             {
-                cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database2 + "] where heno='" + textBox4.Text + "'", sqlcon);
+                cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[HEPAT2021C] where heno='" + textBox4.Text + "'", sqlcon);
             }
             SqlDataReader dr2 = cmd2.ExecuteReader();
             if (dr2.Read())
             {
-                SqlConnection sqlcon2 = new SqlConnection(connectionString: "Data Source=CBSEPAT\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
+                SqlConnection sqlcon2 = new SqlConnection(connectionString: "Data Source=COMP2\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
                 sqlcon2.Open();
-                cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database + "] where HENO='" + dr2["heno"].ToString() + "'", sqlcon2);
+                cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[EXM2021C] where HENO='" + dr2["heno"].ToString() + "'", sqlcon2);
                 SqlDataReader dr = cmd.ExecuteReader();
                 Document pdoc = new Document(PageSize.A4, 20f, 20f, 10f, 50f);
-                PdfWriter pwriter = PdfWriter.GetInstance(pdoc, new FileStream("F:\\pdf\\examiner_he\\he\\" + dr2["sch_no"].ToString() + "_" + dr2["HENO"].ToString() + "_HE2021.pdf", FileMode.Create));
-                var header = iTextSharp.text.Image.GetInstance("D:\\WindowsFormsApp1\\WindowsFormsApp1\\images\\header.png");
-                var footer = iTextSharp.text.Image.GetInstance("D:\\WindowsFormsApp1\\WindowsFormsApp1\\images\\FOOTER.png");
-                var rosign = iTextSharp.text.Image.GetInstance("D:\\WindowsFormsApp1\\WindowsFormsApp1\\images\\rosignpng.png");
-                var header2 = iTextSharp.text.Image.GetInstance("D:\\WindowsFormsApp1\\WindowsFormsApp1\\images\\acceptance_header.png");
+                PdfWriter pwriter = PdfWriter.GetInstance(pdoc, new FileStream("E:\\ABHI\\pdf\\HELETTER\\" + dr2["sch_no"].ToString() + "_" + dr2["HENO"].ToString() + ".pdf", FileMode.Create));
+                var header = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\header.png");
+                var footer = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\FOOTER.png");
+                var rosign = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\rosignpng.png");
+                var header2 = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\acceptance_header.png");
                 header2.ScaleToFit(900f, 60f);
                 header2.Alignment = 1;
                 header.ScaleToFit(900f, 60f);
@@ -69,15 +69,15 @@ namespace WindowsFormsApp1
                 pdoc.Add(p2);
                 Paragraph p3 = new Paragraph("*******************") { Alignment = Element.ALIGN_CENTER };
                 pdoc.Add(p3);
-                Paragraph p4 = new Paragraph(str: "Ref.No.:RO-PTN/EXAM/SPOT/2021/" + dr2["hesub"].ToString() + " - " + dr2["heno"].ToString() + "/                                                   Date:" + date_str) { Alignment = Element.ALIGN_LEFT };
+                Paragraph p4 = new Paragraph(str: "Ref.No.:RO-PTN/EXAM/SPOT/2022(Term 2)/" + dr2["hesub"].ToString() + " - " + dr2["heno"].ToString() + "/                                     Date:" + date_str) { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p4);
                 Paragraph p5 = new Paragraph(str: dr2["heno"].ToString() + "\n" + dr2["HENAME"].ToString().ToUpper() + "\n" + dr2["POST"].ToString().ToUpper() + "\n(" + dr2["sch_no"].ToString() + ") " + dr2["headd1"].ToString().ToUpper() + "\n" + dr2["headd2"].ToString().ToUpper() + "\n" + dr2["headd3"].ToString().ToUpper() + "\n" + dr2["headd4"].ToString().ToUpper() + "\n" + dr2["headd5"].ToString().ToUpper() + "\nPIN: " + dr2["hepin"].ToString()) { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p5);
-                Paragraph p6 = new Paragraph(str: "\nSUB.:  APPOINTMENT LETTER AND INTIMATION FOR SPOT EVALUATION FOR HEAD EXAMINER OF SUBJECT " + dr2["subname"].ToString() + "(" + dr2["hesub"].ToString() + ") OF CLASS " + dr2["heclass"].ToString() + "/2021") { Alignment = Element.ALIGN_LEFT };
+                Paragraph p6 = new Paragraph(str: "\nSUB.:  APPOINTMENT LETTER AND INTIMATION FOR SPOT EVALUATION FOR HEAD EXAMINER OF SUBJECT " + dr2["subname"].ToString() + "(" + dr2["hesub"].ToString() + ") OF CLASS " + dr2["heclass"].ToString() + " FOR TERM 2 EXAM 2022") { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p6);
                 Paragraph p7 = new Paragraph(str: "\nDear Sir/Madam,\n\n") { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p7);
-                Paragraph p8 = new Paragraph(str: "      In  continuation  to  this  office  letter  no. RO(PTN)/CONF./H.E./" + dr2["hesub"].ToString() + "/" + dr2["HENO"].ToString() + "/2021   and  subsequently  your  acceptence for appointment/assignment of Head Examiner in the subject " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + "),  I am to inform you that the Evaluation in the subject  " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + ") is scheduled to   commence  on " + dr2["SDATE"].ToString() + " at your Centre and the work shall have to  be  completed  before " + dr2["EDATE"].ToString() + "  positively.") { Alignment = Element.ALIGN_JUSTIFIED };
+                Paragraph p8 = new Paragraph(str: "      In  continuation  to  this  office  letter  no. RO(PTN)/CONF./H.E./" + dr["hesub"].ToString() + "/" + dr["heno"].ToString() + "/Term 2-2022/   and  subsequently  your  acceptence for appointment/assignment of Head Examiner in the subject " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + "),  I am to inform you that the Evaluation in the subject  " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + ") is scheduled to   commence  on " + dr2["SDATE"].ToString() + " at your Centre and the work shall have to  be  completed  before " + dr2["EDATE"].ToString() + "  positively.") { Alignment = Element.ALIGN_JUSTIFIED };
                 pdoc.Add(p8);
                 Paragraph p9 = new Paragraph(str: "      You must be aware that the Evaluation Work is very sensitive in nature and the future of the students is going to be  affected by the  manner in which the Evaluation is done.  Therefore, it is requested that due care, attention and complete  dedication should be given to  the  Evaluation  of  Answer  Books  by ensuring accuracy & uniformity as per  Marking  Scheme  and performance.  Also it may be noted that  the  work  assigned  to  you is strictly time  bound & confidential and the entire Post - Examination work will have a direct bearing for timely completion of Evaluation Work and subsequently scheduled declaration  of result.  You are therefore requested to complete the task including coordination work within prescirbed period i.e. ten days time(maximum) positively.\n      Though  the  examiners  have  been  appointed  by the Regional Office.  However, Head Examiner can make alternate arrangements when  the  requisite no. of  examiners appointed by the Board do not report for evaluation with a valid reason.") { Alignment = Element.ALIGN_JUSTIFIED };
                 pdoc.Add(p9);
@@ -123,7 +123,7 @@ namespace WindowsFormsApp1
                     tbl2.AddCell(new Phrase(str: "Examiner School No. and Name\nContact No.", hbold)); 
                     sqlcon2.Close();
                     sqlcon2.Open();
-                    cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database + "] where HENO='" + dr2["heno"].ToString() + "'", sqlcon2);
+                    cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[EXM2021C] where HENO='" + dr2["heno"].ToString() + "'", sqlcon2);
                     SqlDataReader dr3 = cmd.ExecuteReader();
                     while (dr3.Read())
                     {

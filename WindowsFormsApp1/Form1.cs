@@ -52,5 +52,11 @@ namespace WindowsFormsApp1
             var Examiner_letter = new Examiner_letter();
             Examiner_letter.Show();
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            var VOCPRAC_letter = new VOCPRAC_letter();
+            VOCPRAC_letter.Show();
+        }
     }
 }

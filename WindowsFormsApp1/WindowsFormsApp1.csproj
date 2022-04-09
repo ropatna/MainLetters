@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WindowsFormsApp1</RootNamespace>
     <AssemblyName>WindowsFormsApp1</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -70,18 +70,14 @@
       <HintPath>..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="MySql.Data, Version=8.0.23.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 8.0.23\Assemblies\v4.5.2\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.4.1.0\lib\net48\WebDriver.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +125,12 @@
     <Compile Include="Self_Centre.Designer.cs">
       <DependentUpon>Self_Centre.cs</DependentUpon>
     </Compile>
+    <Compile Include="VOCPRAC_letter.CS">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VOCPRAC_letter.Designer.CS">
+      <DependentUpon>VOCPRAC_letter.CS</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Centre_intimation.resx">
       <DependentUpon>Centre_intimation.cs</DependentUpon>
     </EmbeddedResource>
@@ -159,6 +161,9 @@
     </Compile>
     <EmbeddedResource Include="Self_Centre.resx">
       <DependentUpon>Self_Centre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VOCPRAC_letter.resx">
+      <DependentUpon>VOCPRAC_letter.CS</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
