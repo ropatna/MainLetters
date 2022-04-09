@@ -22,22 +22,22 @@ namespace WindowsFormsApp1
             sqlcon.Open();
             SqlCommand cmd = new SqlCommand("", sqlcon);
             SqlCommand cmd2 = new SqlCommand("", sqlcon);
-            //string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "exm2021c");
-            //string database2 = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "hepat2021c");
+            string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "exm2021c");
+            string database2 = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "hepat2021c");
             if (String.IsNullOrEmpty(textBox4.Text))
             {
-                cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[HEPAT2021C]", sqlcon);
+                cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].["+ database2 + "]", sqlcon);
             }
             else
             {
-                cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[HEPAT2021C] where heno='" + textBox4.Text + "'", sqlcon);
+                cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database2 + "] where heno='" + textBox4.Text + "'", sqlcon);
             }
             SqlDataReader dr2 = cmd2.ExecuteReader();
             if (dr2.Read())
             {
                 SqlConnection sqlcon2 = new SqlConnection(connectionString: "Data Source=COMP2\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
                 sqlcon2.Open();
-                cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[EXM2021C] where HENO='" + dr2["heno"].ToString() + "'", sqlcon2);
+                cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database + "] where HENO='" + dr2["heno"].ToString() + "'", sqlcon2);
                 SqlDataReader dr = cmd.ExecuteReader();
                 Document pdoc = new Document(PageSize.A4, 20f, 20f, 10f, 50f);
                 PdfWriter pwriter = PdfWriter.GetInstance(pdoc, new FileStream("E:\\ABHI\\pdf\\HELETTER\\" + dr2["sch_no"].ToString() + "_" + dr2["HENO"].ToString() + ".pdf", FileMode.Create));
@@ -123,7 +123,7 @@ namespace WindowsFormsApp1
                     tbl2.AddCell(new Phrase(str: "Examiner School No. and Name\nContact No.", hbold)); 
                     sqlcon2.Close();
                     sqlcon2.Open();
-                    cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[EXM2021C] where HENO='" + dr2["heno"].ToString() + "'", sqlcon2);
+                    cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database + "] where HENO='" + dr2["heno"].ToString() + "'", sqlcon2);
                     SqlDataReader dr3 = cmd.ExecuteReader();
                     while (dr3.Read())
                     {
