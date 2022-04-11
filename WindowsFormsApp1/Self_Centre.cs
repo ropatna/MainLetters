@@ -34,7 +34,7 @@ namespace WindowsFormsApp1
             while (dr.Read())
             {
                 Document doc = new Document(PageSize.A4, 20f, 20f, 10f, 50f);
-                PdfWriter pwriter = PdfWriter.GetInstance(doc, new FileStream("E:\\abhi\\pdf\\SELF\\" + dr["CSSCHNO"].ToString() + "_" + dr["CEN_NO"].ToString() + "_CS.pdf", FileMode.Create));
+                PdfWriter pwriter = PdfWriter.GetInstance(doc, new FileStream("E:\\abhi\\pdf\\SELF\\" + dr["SCH_NO"].ToString() + "_" + dr["CEN_NO"].ToString() + "_CS.pdf", FileMode.Create));
                 var header = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\header.png");
                 var footer = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\FOOTER.png");
                 var rosign = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\rosignpng.png");
@@ -65,7 +65,7 @@ namespace WindowsFormsApp1
                     pdoc.Add(p3);
                     Paragraph p4 = new Paragraph(str: "Ref.No.:CBSE/RO(PTN)/CONF./CS/ " + dr["CEN_NO"].ToString() + " /TERM 2-2022/                                   Date:" + date_str) { Alignment = Element.ALIGN_LEFT };
                     pdoc.Add(p4);
-                    Paragraph p5 = new Paragraph(str: dr["CSSCHNO"].ToString() + "\n" + dr["CSNAME"].ToString() + "\n Vice Principle / Sr. PGT of \n" + dr["ADD1_"].ToString() + "\n" + dr["ADD2_"].ToString() + "\n" + dr["ADD3_"].ToString() + "\n" + dr["ADD4_"].ToString() + "\n" + dr["ADD5_"].ToString() + "\nPIN: " + dr["PIN_"].ToString() + "\n\n") { Alignment = Element.ALIGN_LEFT };
+                    Paragraph p5 = new Paragraph(str: dr["SCH_NO"].ToString() + "\n" + dr["NAME"].ToString() + "\n Vice Principle / Sr. PGT of \n" + dr["ADD1"].ToString() + "\n" + dr["ADD2"].ToString() + "\n" + dr["ADD3"].ToString() + "\n" + dr["ADD4"].ToString() + "\n" + dr["ADD5"].ToString() + "\nPIN: " + dr["PIN"].ToString() + "\n\n") { Alignment = Element.ALIGN_LEFT };
                     pdoc.Add(p5);
                     Paragraph p6 = new Paragraph(str: "Sub:  Intimation  regarding  appointment  of  Centre  Superintendent  for AISSE(X) / AISSCE(XII) Term 2 Main Exam 2022 at Centre No." + dr["cen_no"].ToString() + "\n\n") { Alignment = Element.ALIGN_LEFT };
                     pdoc.Add(p6);
@@ -76,16 +76,16 @@ namespace WindowsFormsApp1
                     PdfPTable tbl1 = new PdfPTable(2);
                     tbl1.HorizontalAlignment = 1;
                     tbl1.DefaultCell.Border = 0;
-                    tbl1.AddCell(new Phrase(dr["cen_no"].ToString() + "\nTHE PRINCIPAL\n" + dr["add1"].ToString() + "\n" + dr["add2"].ToString() + "\n" + dr["add3"].ToString() + "\n" + dr["add4"].ToString() + "\n" + dr["add5"].ToString() + "\nPIN: " + dr["pin"].ToString() + "\n"));
-                    tbl1.AddCell(new Phrase(dr["MOBILE"].ToString() + "\n" + dr["CENTemail"].ToString() + "\n"));
+                    tbl1.AddCell(new Phrase(dr["cen_no"].ToString() + "\nTHE PRINCIPAL\n" + dr["CADD1"].ToString() + "\n" + dr["CADD2"].ToString() + "\n" + dr["CADD3"].ToString() + "\n" + dr["CADD4"].ToString() + "\n" + dr["CADD5"].ToString() + "\nPIN: " + dr["CPIN"].ToString() + "\n"));
+                    tbl1.AddCell(new Phrase(dr["CPR_MOB"].ToString() + "\n" + dr["CEMAIL"].ToString() + "\n"));
                     pdoc.Add(tbl1);
                     Paragraph p9 = new Paragraph(str: "      The Question Papers of your Centre will be stored  at the following Bank which may please be kept confidential:\n") { Alignment = Element.ALIGN_JUSTIFIED };
                     pdoc.Add(p9);
                     PdfPTable tbl2 = new PdfPTable(2);
                     tbl2.HorizontalAlignment = 1;
                     tbl2.DefaultCell.Border = 0;
-                    tbl2.AddCell(new Phrase(dr["bnk_add1"].ToString() + "\n" + dr["bnk_add2"].ToString() + "\n" + dr["bnk_add3"].ToString() + "\n" + dr["bnk_city"].ToString() + "\n" + dr["bnk_dist"].ToString() + "\nPIN: " + dr["bnk_pin"].ToString() + "\n"));
-                    tbl2.AddCell(new Phrase("Ph.(O): " + dr["o_ph1"].ToString() + "\nPh.(R): " + dr["r_ph1"].ToString() + "\n"));
+                    tbl2.AddCell(new Phrase(dr["CUST_NAME"].ToString() + "\n" + dr["CUST_ADD1"].ToString() + "\n" + dr["CUST_ADD2"].ToString() + "\n" + dr["CUST_ADD3"].ToString() + "\n" + dr["CUST_DISTT"].ToString() + "\nPIN: " + dr["CUST_PIN"].ToString() + "\n"));
+                    tbl2.AddCell(new Phrase("Ph.(O): " + dr["BM_MOB"].ToString() + "\nPh.(R): " + dr["CUST_TELE"].ToString() + "\n"));
                     pdoc.Add(tbl2);
                     Paragraph p10 = new Paragraph(str: "      The  bank  will  deliver  the Question Papers of the subject to  the Centre Supdt. or  his / her  representative on the day(s) of  Examination at an appropriate time  so that the same  would  reach the Exam Centre at 9:30 A.M. positively.\n") { Alignment = Element.ALIGN_JUSTIFIED };
                     pdoc.Add(p10);
@@ -218,15 +218,15 @@ namespace WindowsFormsApp1
                 tbl7.WidthPercentage = 100f;
                 tbl7.HorizontalAlignment = Right;
                 tbl7.DefaultCell.Border = 0;
-                tbl7.AddCell(new Phrase(str: "Name and Address of School:\n\n" + dr["ADD1_"].ToString() + "\n" + dr["ADD2_"].ToString() + "\n" + dr["ADD3_"].ToString() + "\n" + dr["ADD4_"].ToString() + "\n" + dr["ADD5_"].ToString() + "\nPIN: " + dr["PIN_"].ToString() + "\nEmail  Id.:  " + dr["cs_email"].ToString() + "\n\n"));
+                tbl7.AddCell(new Phrase(str: "Name and Address of School:\n\n" + dr["ADD1"].ToString() + "\n" + dr["ADD2"].ToString() + "\n" + dr["ADD3"].ToString() + "\n" + dr["ADD4"].ToString() + "\n" + dr["ADD5"].ToString() + "\nPIN: " + dr["PIN"].ToString() + "\nEmail  Id.:  " + dr["EMAIL"].ToString() + "\n\n"));
                 tbl7.AddCell(new Phrase(str: "\n\n"));
-                tbl7.AddCell(new Phrase(str: "\nName: " + dr["CSNAME"].ToString() + "\nDesig.:  VICE PRINCIPAL / SR. PGT \n\nMobile No. for using\nCMTM-App :" + dr["cs_mobile"].ToString() + "\n\n"));
+                tbl7.AddCell(new Phrase(str: "\nName: " + dr["NAME"].ToString() + "\nDesig.:  VICE PRINCIPAL / SR. PGT \n\nMobile No. for using\nCMTM-App :" + dr["MOBILE"].ToString() + "\n\n"));
                 doc.Add(tbl7);
                 doc.Close();
                 //
                 //
                 Document doc2 = new Document(PageSize.A4, 20f, 20f, 10f, 50f);
-                PdfWriter pwriter2 = PdfWriter.GetInstance(doc2, new FileStream("E:\\abhi\\pdf\\SELF\\" + dr["CSSCHNO"].ToString() + "_" + dr["CEN_NO"].ToString() + "_csschool.pdf", FileMode.Create));
+                PdfWriter pwriter2 = PdfWriter.GetInstance(doc2, new FileStream("E:\\abhi\\pdf\\SELF\\" + dr["SCH_NO"].ToString() + "_" + dr["CEN_NO"].ToString() + "_csschool.pdf", FileMode.Create));
                 header.ScaleToFit(900f, 60f);
                 header.Alignment = 1;
                 footer.ScaleToFit(880f, 55f);
@@ -244,7 +244,7 @@ namespace WindowsFormsApp1
                 doc2.NewPage();
                 doc2.Add(header); //Adding Header
                 doc2.Add(footer); //Adding Foter
-                Paragraph p28 = new Paragraph(str: "\n\n\nCopy To:\n\nThe Principal,(" + dr["CSSCHNO"].ToString() + ")\n" + dr["ADD1_"].ToString() + "\n" + dr["ADD2_"].ToString() + "\n" + dr["ADD3_"].ToString() + "\n" + dr["ADD4_"].ToString() + "\n" + dr["ADD5_"].ToString() + "\nPIN: " + dr["pin_"].ToString() + "\n") { Alignment = Element.ALIGN_LEFT };
+                Paragraph p28 = new Paragraph(str: "\n\n\nCopy To:\n\nThe Principal,(" + dr["SCH_NO"].ToString() + ")\n" + dr["ADD1"].ToString() + "\n" + dr["ADD2"].ToString() + "\n" + dr["ADD3"].ToString() + "\n" + dr["ADD4"].ToString() + "\n" + dr["ADD5"].ToString() + "\nPIN: " + dr["PIN"].ToString() + "\n") { Alignment = Element.ALIGN_LEFT };
                 doc2.Add(p28);
                 Paragraph p29 = new Paragraph(str: "       With  the  request  to  relieve  above  Vice  Principal / PGT  from the School to act as Centre Superintendent at the above fixed Centre for Term II Main Examinations 2022 as per  the  undertaking / data forwarded  by you.  The status of releiving of the teacher concern must be confirmed to the  undersigned  on priority.\n\n") { Alignment = Element.ALIGN_JUSTIFIED };
                 doc2.Add(p29);
@@ -255,7 +255,7 @@ namespace WindowsFormsApp1
                 //
                 //
                 Document doc3 = new Document(PageSize.A4, 20f, 20f, 10f, 50f);
-                PdfWriter pwriter3 = PdfWriter.GetInstance(doc3, new FileStream("E:\\abhi\\pdf\\SELF\\" + dr["centschno"].ToString() + "_centre.pdf", FileMode.Create));
+                PdfWriter pwriter3 = PdfWriter.GetInstance(doc3, new FileStream("E:\\abhi\\pdf\\SELF\\" + dr["CSCH_NO"].ToString() + "_centre.pdf", FileMode.Create));
                 header.ScaleToFit(900f, 60f);
                 header.Alignment = 1;
                 footer.ScaleToFit(880f, 55f);
@@ -273,7 +273,7 @@ namespace WindowsFormsApp1
                 doc3.NewPage();
                 doc3.Add(header); //Adding Header
                 doc3.Add(footer); //Adding Foter
-                Paragraph p33 = new Paragraph(str: "\n\n\nCopy To:\n\nThe Principal,(" + dr["centschno"].ToString() + ")\n" + dr["add1"].ToString() + "\n" + dr["ADD2"].ToString() + "\n" + dr["ADD3"].ToString() + "\n" + dr["ADD4"].ToString() + "\n" + dr["ADD5"].ToString() + "\nPIN: " + dr["pin"].ToString() + "\n") { Alignment = Element.ALIGN_LEFT };
+                Paragraph p33 = new Paragraph(str: "\n\n\nCopy To:\n\nThe Principal,(" + dr["CSCH_NO"].ToString() + ")\n" + dr["CADD1"].ToString() + "\n" + dr["CADD2"].ToString() + "\n" + dr["CADD3"].ToString() + "\n" + dr["CADD4"].ToString() + "\n" + dr["CADD5"].ToString() + "\nPIN: " + dr["CPIN"].ToString() + "\n") { Alignment = Element.ALIGN_LEFT };
                 doc3.Add(p33);
                 Paragraph p34 = new Paragraph(str: "       For information and with the request to extend full co-operation  to Centre Supdt. at  your  school  centre  for  smooth and   fair  conduct  of Term II Main examination 2022.  It may also be noted that any deviation in regard with conduct of examination  may  leads  the  administrative action against the defaulting.\n\n") { Alignment = Element.ALIGN_JUSTIFIED };
                 doc3.Add(p34);
