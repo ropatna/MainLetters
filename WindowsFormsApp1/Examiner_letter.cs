@@ -11,7 +11,7 @@ namespace WindowsFormsApp1
     {
         static DateTime date = DateTime.Now;
         string date_str = date.ToString("dd/MM/yyyy"); //CURRENT SYSTEM DATE
-        SqlConnection sqlcon = new SqlConnection(connectionString: "Data Source=CBSEPAT\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
+        SqlConnection sqlcon = new SqlConnection(connectionString: "Data Source=comp2\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
         public Examiner_letter()
         {
             InitializeComponent();
@@ -22,8 +22,8 @@ namespace WindowsFormsApp1
             sqlcon.Open();
             SqlCommand cmd = new SqlCommand("", sqlcon);
             SqlCommand cmd2 = new SqlCommand("", sqlcon);
-            string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "EXM2021FINAL");
-            string database2 = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "HE2021");
+            string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "exm1222t2");
+            string database2 = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "he1222t2");
             if (String.IsNullOrEmpty(textBox5.Text))
             {
                 cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database + "]", sqlcon);
@@ -35,18 +35,18 @@ namespace WindowsFormsApp1
             SqlDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
-                SqlConnection sqlcon2 = new SqlConnection(connectionString: "Data Source=CBSEPAT\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
+                SqlConnection sqlcon2 = new SqlConnection(connectionString: "Data Source=comp2\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
                 sqlcon2.Open();
                 cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database2 + "] where HENO='" + dr["heno"].ToString() + "'", sqlcon2);
                 SqlDataReader dr2 = cmd2.ExecuteReader();
                 if (dr2.Read())
                 {
                     Document doc = new Document(PageSize.A4, 20f, 20f, 10f, 50f);
-                    PdfWriter pwriter = PdfWriter.GetInstance(doc, new FileStream("F:\\pdf\\examiner_he\\examiner\\" + dr["sch_no"].ToString() + "_" + dr["HENO"].ToString() + "_" + dr["slno"].ToString() + "_EX2021.pdf", FileMode.Create));
-                    var header = iTextSharp.text.Image.GetInstance("D:\\WindowsFormsApp1\\WindowsFormsApp1\\images\\header.png");
-                    var footer = iTextSharp.text.Image.GetInstance("D:\\WindowsFormsApp1\\WindowsFormsApp1\\images\\FOOTER.png");
-                    var rosign = iTextSharp.text.Image.GetInstance("D:\\WindowsFormsApp1\\WindowsFormsApp1\\images\\rosignpng.png");
-                    var header2 = iTextSharp.text.Image.GetInstance("D:\\WindowsFormsApp1\\WindowsFormsApp1\\images\\acceptance_header.png");
+                    PdfWriter pwriter = PdfWriter.GetInstance(doc, new FileStream("E:\\abhi\\pdf\\EXMLETTER\\" + dr["sch_no"].ToString() + "_" + dr["HENO"].ToString() + "_" + dr["slno"].ToString() + "_EX2022.pdf", FileMode.Create));
+                    var header = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\header.png");
+                    var footer = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\FOOTER.png");
+                    var rosign = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\rosignpng.png");
+                    var header2 = iTextSharp.text.Image.GetInstance("E:\\abhi\\WindowsFormsApp1\\WindowsFormsApp1\\images\\acceptance_header.png");
                     header2.ScaleToFit(900f, 60f);
                     header2.Alignment = 1;
                     header.ScaleToFit(900f, 60f);
@@ -71,15 +71,16 @@ namespace WindowsFormsApp1
                         pdoc.Add(p2);
                         Paragraph p3 = new Paragraph("*******************") { Alignment = Element.ALIGN_CENTER };
                         pdoc.Add(p3);
-                        Paragraph p4 = new Paragraph(str: "Ref.No.:RO-PTN/EXAM/SPOT/2021/" + dr2["hesub"].ToString() + " - " + dr["SLNO"].ToString() + "/                                                   Date:" + date_str) { Alignment = Element.ALIGN_LEFT };
+                        Paragraph p4 = new Paragraph(str: "Ref.No.:RO-PTN/EXAM/SPOT/Term 2 2022/" + dr2["hesub"].ToString() + " - " + dr["SLNO"].ToString() + "/                                       Date:" + date_str) { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p4);
-                        Paragraph p5 = new Paragraph(str: dr["SLNO"].ToString() + "\n(" + dr["sch_no"].ToString() + ") " + dr["add1"].ToString() + "\n" + dr["add2"].ToString() + "\n" + dr["add3"].ToString() + "\n" + dr["add4"].ToString() + "\n" + dr["add5"].ToString() + "\nPIN: " + dr["pin"].ToString()) { Alignment = Element.ALIGN_LEFT };
+                        //Paragraph p5 = new Paragraph(str: dr["SLNO"].ToString() + "\nSchool No: " + dr["sch_no"].ToString() + "  " + dr["add1"].ToString() + "\n" + dr["add2"].ToString() + "\n" + dr["add3"].ToString() + "\n" + dr["add4"].ToString() + "\n" + dr["add5"].ToString() + "\nPIN: " + dr["pin"].ToString()) { Alignment = Element.ALIGN_LEFT };
+                        Paragraph p5 = new Paragraph(str: dr["SLNO"].ToString() + "\nSchool No: " + dr["sch_no"].ToString() + "\n" + dr["exabbrname"].ToString()) { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p5);
-                        Paragraph p6 = new Paragraph(str: "\nSUB.:  APPOINTMENT LETTER AND INTIMATION OF VENUE FOR SPOT EVALUATION FOR EXAMINERS IN THE SUBJECT " + dr2["subname"].ToString() + "(" + dr2["hesub"].ToString() + ") OF CLASS " + dr2["heclass"].ToString() + "/2021") { Alignment = Element.ALIGN_LEFT };
+                        Paragraph p6 = new Paragraph(str: "\nSUB.:  APPOINTMENT LETTER AND INTIMATION OF VENUE FOR SPOT EVALUATION FOR EXAMINERS IN THE SUBJECT " + dr2["subname"].ToString() + "(" + dr2["hesub"].ToString() + ") OF CLASS " + dr2["heclass"].ToString() + " Term 2 Exam 2022") { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p6);
                         Paragraph p7 = new Paragraph(str: "\nDear Sir/Madam,\n\n") { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p7);
-                        Paragraph p8 = new Paragraph(str: "      I am to inform you that you have  been  appointed as  Examiner for Evaluation  of  Answer Books of the subject mentioned above for 2021 class " + dr2["heclass"].ToString() + " Examinations.  The Evaluation work will be done at the following address.  The appointment as well as the information to  this  effect  will be kept strictly confidential by you.\n") { Alignment = Element.ALIGN_JUSTIFIED };
+                        Paragraph p8 = new Paragraph(str: "      I am to inform you that you have  been  appointed as  Examiner for Evaluation  of  Answer Books of the subject mentioned above for 2022 class " + dr2["heclass"].ToString() + " Term 2 Examinations.  The Evaluation work will be done at the following address.  The appointment as well as the information to  this  effect  will be kept strictly confidential by you.\n") { Alignment = Element.ALIGN_JUSTIFIED };
                         pdoc.Add(p8);
                         Paragraph p1 = new Paragraph(str: "\nNAME AND ADDRESS OF CHIEF NODAL SUPERVISOR/VENUE OF SPOT EVALUATION") { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p1);
@@ -113,7 +114,7 @@ namespace WindowsFormsApp1
                         pdoc.Add(footer);
                         Paragraph p14 = new Paragraph(str: "\n       While evaluating the answer books, the examiner concerned  must  ensure that where multiple sets of question papers are  in the subject  i.e. 3 sets of  question  papers, only one  set's answer book have to be taken  for  evaluation as far as possible.  It will be the responsibility of the examiner to verify and ascertain that the answer books in hand does not belong to any of the other set other than the one which he / she has been allotted for evaluation.However, in case of the multiple  sets  of  question paper's  answer books the examiner should have the knowledge of the other sets also which is not difficult being the part of  the same syllabus and the academic subject.  Thus, the  evaluation be done accordingly.") { Alignment = Element.ALIGN_JUSTIFIED };
                         pdoc.Add(p14);
-                        Paragraph p15 = new Paragraph(str: "\n       REMUNERATION\\CONVEYANCE IS ADMISSIBLE AS PER LAST YEAR OR AS PER CS GUIDELINES-2021:\n        =================================================================================", FontFactory.GetFont(FontFactory.TIMES_BOLD, 10)) { Alignment = Element.ALIGN_LEFT };
+                        Paragraph p15 = new Paragraph(str: "\n       REMUNERATION\\CONVEYANCE IS ADMISSIBLE AS PER LAST YEAR OR AS PER CS GUIDELINES-2022:\n        =================================================================================", FontFactory.GetFont(FontFactory.TIMES_BOLD, 10)) { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p15);
                         PdfPTable tbl3 = new PdfPTable(2);
                         tbl3.HorizontalAlignment = 0;
@@ -142,7 +143,7 @@ namespace WindowsFormsApp1
                     //
                     //
                     Document doc2 = new Document(PageSize.A4, 20f, 20f, 10f, 50f);
-                    PdfWriter pwriter2 = PdfWriter.GetInstance(doc2, new FileStream("F:\\pdf\\examiner_he\\examiner\\" + dr["sch_no"].ToString() + "_" + dr["HENO"].ToString() + "_" + dr["slno"].ToString() + "_EXsch2021.pdf", FileMode.Create));
+                    PdfWriter pwriter2 = PdfWriter.GetInstance(doc2, new FileStream("E:\\abhi\\pdf\\EXMLETTER\\" + dr["sch_no"].ToString() + "_" + dr["HENO"].ToString() + "_" + dr["slno"].ToString() + "_EXsch2022.pdf", FileMode.Create));
                     header2.ScaleToFit(900f, 60f);
                     header2.Alignment = 1;
                     header.ScaleToFit(900f, 60f);
@@ -160,9 +161,9 @@ namespace WindowsFormsApp1
                     doc2.NewPage();
                     doc2.Add(header);
                     doc2.Add(footer);
-                    Paragraph p25 = new Paragraph(str: "\n\n\nCopy To:\n\nThe Principal,(" + dr["SCH_NO"].ToString() + ")\n" + dr["add1"].ToString() + "\n" + dr["ADD2"].ToString() + "\n" + dr["ADD3"].ToString() + "\n" + dr["ADD4"].ToString() + "\n" + dr["ADD5"].ToString() + "\nPIN: " + dr["pin"].ToString() + "\n") { Alignment = Element.ALIGN_LEFT };
+                    Paragraph p25 = new Paragraph(str: "\n\n\nCopy To:\n\nThe Principal,(" + dr["SCH_NO"].ToString() + ")\n" + dr["exabbrname"].ToString()) { Alignment = Element.ALIGN_LEFT };
                     doc2.Add(p25);
-                    Paragraph p26 = new Paragraph(str: "\n\n       With  the  request  to  relieve  above  VP/PGT/PET/TGT  from the School  to  act as HEAD EXAMINER/SUB EXAMINER at the above Spot Evaluation Centre  for 2021 Main  Exam as per  the  undertaking/data forwarded  by you.  The status of releiving of the teacher concerned must be confirmed to the  undersigned  on priority as it is mandatory.\n\n       AS PER CLAUSE 12.2.10 OF AFFILIATION BYE-LAWS.  THE BOARD MAY IMPOSE ALL OR ANY OF THE PENALTIES IN CLAUSE  12.1.1 TO 12.1.9 FOR NOT NOMINATING AND RELIEVING TEACHERS FOR EVALUATION OF ANSWER SCRIPTS OF THE BOARDS EXAMINATION AND OTHER ANCILLARY ACTIVITIES AS PER REQUIREMENTS OF THE BOARD.\n\n") { Alignment = Element.ALIGN_JUSTIFIED };
+                    Paragraph p26 = new Paragraph(str: "\n\n       With  the  request  to  relieve  above  VP/PGT/PET/TGT  from the School  to  act as HEAD EXAMINER/SUB EXAMINER at the above Spot Evaluation Centre  for 2022 Term 2 Exam as per  the  undertaking/data forwarded  by you.  The status of releiving of the teacher concerned must be confirmed to the  undersigned  on priority as it is mandatory.\n\n       AS PER CLAUSE 12.2.10 OF AFFILIATION BYE-LAWS.  THE BOARD MAY IMPOSE ALL OR ANY OF THE PENALTIES IN CLAUSE  12.1.1 TO 12.1.9 FOR NOT NOMINATING AND RELIEVING TEACHERS FOR EVALUATION OF ANSWER SCRIPTS OF THE BOARDS EXAMINATION AND OTHER ANCILLARY ACTIVITIES AS PER REQUIREMENTS OF THE BOARD.\n\n") { Alignment = Element.ALIGN_JUSTIFIED };
                     doc2.Add(p26);
                     doc2.Add(rosign);
                     Paragraph p27 = new Paragraph(str: "\n\n\n(JAGADISH BARMAN) \nREGIONAL OFFICER\n") { Alignment = Element.ALIGN_RIGHT };

@@ -69,7 +69,7 @@ namespace WindowsFormsApp1
                 pdoc.Add(p2);
                 Paragraph p3 = new Paragraph("*******************") { Alignment = Element.ALIGN_CENTER };
                 pdoc.Add(p3);
-                Paragraph p4 = new Paragraph(str: "Ref.No.:RO-PTN/EXAM/SPOT/Term 2 2022/" + dr2["hesub"].ToString() + " - " + dr2["heno"].ToString() + "/                                                   Date:" + date_str) { Alignment = Element.ALIGN_LEFT };
+                Paragraph p4 = new Paragraph(str: "Ref.No.:RO-PTN/EXAM/SPOT/Term 2 2022/" + dr2["hesub"].ToString() + " - " + dr2["heno"].ToString() + "/                                          Date:" + date_str) { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p4);
                 Paragraph p5 = new Paragraph(str: dr2["heno"].ToString() + "\n" + dr2["HENAME"].ToString().ToUpper() + "\n" + dr2["POST"].ToString().ToUpper() + "\n(" + dr2["sch_no"].ToString() + ") " + dr2["headd1"].ToString().ToUpper() + "\n" + dr2["headd2"].ToString().ToUpper() + "\n" + dr2["headd3"].ToString().ToUpper() + "\n" + dr2["headd4"].ToString().ToUpper() + "\n" + dr2["headd5"].ToString().ToUpper() + "\nPIN: " + dr2["hepin"].ToString()) { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p5);
