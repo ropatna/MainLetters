@@ -22,8 +22,19 @@ namespace WindowsFormsApp1
             sqlcon.Open();
             SqlCommand cmd = new SqlCommand("", sqlcon);
             SqlCommand cmd2 = new SqlCommand("", sqlcon);
-            string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "exm1222t2");
-            string database2 = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "he1222t2");
+            string database = "";
+            string database2 = "";
+            string cls = Microsoft.VisualBasic.Interaction.InputBox("ENTER CLASS FOR WHICH LETTER HAS TO BE GENERATED", "INPUT CLASS", "");
+            if (cls == "10")
+            {
+                database = "exmhe1022t2";
+                database2 = "hepat1022t2";
+            }
+            if (cls == "12")
+            {
+                database = "exmhe2022t2";
+                database2 = "hepat2022t2";
+            }
             if (String.IsNullOrEmpty(textBox4.Text))
             {
                 cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].["+ database2 + "]", sqlcon);
@@ -33,7 +44,7 @@ namespace WindowsFormsApp1
                 cmd2 = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database2 + "] where heno='" + textBox4.Text + "'", sqlcon);
             }
             SqlDataReader dr2 = cmd2.ExecuteReader();
-            if (dr2.Read())
+            while (dr2.Read())
             {
                 SqlConnection sqlcon2 = new SqlConnection(connectionString: "Data Source=comp2\\SQLEXPRESS;Initial Catalog=LETTERS;Integrated Security=True"); //CONNECTION STRING
                 sqlcon2.Open();
@@ -71,17 +82,21 @@ namespace WindowsFormsApp1
                 pdoc.Add(p3);
                 Paragraph p4 = new Paragraph(str: "Ref.No.:RO-PTN/EXAM/SPOT/Term 2 2022/" + dr2["hesub"].ToString() + " - " + dr2["heno"].ToString() + "/                                          Date:" + date_str) { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p4);
-                Paragraph p5 = new Paragraph(str: dr2["heno"].ToString() + "\n" + dr2["HENAME"].ToString().ToUpper() + "\n" + dr2["POST"].ToString().ToUpper() + "\n(" + dr2["sch_no"].ToString() + ") " + dr2["headd1"].ToString().ToUpper() + "\n" + dr2["headd2"].ToString().ToUpper() + "\n" + dr2["headd3"].ToString().ToUpper() + "\n" + dr2["headd4"].ToString().ToUpper() + "\n" + dr2["headd5"].ToString().ToUpper() + "\nPIN: " + dr2["hepin"].ToString()) { Alignment = Element.ALIGN_LEFT };
+                Paragraph p34 = new Paragraph(str: "He No." + dr2["heno"].ToString(),hbold) { Alignment = Element.ALIGN_RIGHT };
+                pdoc.Add(p34);
+                Paragraph p5 = new Paragraph(str: dr2["HENAME"].ToString().ToUpper() + ", " + dr2["POST"].ToString().ToUpper() + "\n(" + dr2["sch_no"].ToString() + ") " + dr2["headd1"].ToString().ToUpper() + "\n" + dr2["headd2"].ToString().ToUpper() + "\n" + dr2["headd3"].ToString().ToUpper() + "\n" + dr2["headd4"].ToString().ToUpper() + ", " + dr2["headd5"].ToString().ToUpper() + ", PIN: " + dr2["hepin"].ToString()) { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p5);
                 Paragraph p6 = new Paragraph(str: "\nSUB.:  APPOINTMENT LETTER AND INTIMATION FOR SPOT EVALUATION FOR HEAD EXAMINER OF SUBJECT " + dr2["subname"].ToString() + "(" + dr2["hesub"].ToString() + ") OF CLASS " + dr2["heclass"].ToString() + " Term 2 Main Exam 2022") { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p6);
-                Paragraph p7 = new Paragraph(str: "\nDear Sir/Madam,\n\n") { Alignment = Element.ALIGN_LEFT };
+                Paragraph p7 = new Paragraph(str: "\nDear Sir/Madam,") { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p7);
-                Paragraph p8 = new Paragraph(str: "      In  continuation  to  this  office  letter  no. RO(PTN)/CONF./H.E./" + dr2["hesub"].ToString() + "/" + dr2["HENO"].ToString() + "/2022 Term 2   and  subsequently  your  acceptence for appointment/assignment of Head Examiner in the subject " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + "),  I am to inform you that the Evaluation in the subject  " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + ") is scheduled to   commence  on " + dr2["SDATE"].ToString() + " at your Centre and the work shall have to  be  completed  before " + dr2["EDATE"].ToString() + "  positively.") { Alignment = Element.ALIGN_JUSTIFIED };
+                Paragraph p8 = new Paragraph(str: "      This is in  continuation  to  this  office  letter  no. RO(PTN)/CONF./H.E./" + dr2["hesub"].ToString() + "/" + dr2["HENO"].ToString() + "/2022 Term 2   and  subsequently  your  acceptence for appointment/assignment of Head Examiner in the subject " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + "),\n      In this connection, I am to inform you that the Evaluation in the subject  " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + ") is scheduled to   commence  on dt. " + dr2["SDATE"].ToString() + " at your Centre and the work shall have to  be  completed  before dt. " + dr2["EDATE"].ToString() + "  positively.") { Alignment = Element.ALIGN_JUSTIFIED };
                 pdoc.Add(p8);
-                Paragraph p9 = new Paragraph(str: "      You must be aware that the Evaluation Work is very sensitive in nature and the future of the students is going to be  affected by the  manner in which the Evaluation is done.  Therefore, it is requested that due care, attention and complete  dedication should be given to  the  Evaluation  of  Answer  Books  by ensuring accuracy & uniformity as per  Marking  Scheme  and performance.  Also it may be noted that  the  work  assigned  to  you is strictly time  bound & confidential and the entire Post - Examination work will have a direct bearing for timely completion of Evaluation Work and subsequently scheduled declaration  of result.  You are therefore requested to complete the task including coordination work within prescirbed period i.e. 08-10 days time(maximum) positively.\n      Though  the  examiners  have  been  appointed  by the Regional Office.  However, Head Examiner can make alternate arrangements in consultation with the CNS when  the  requisite no. of  examiners appointed by the Board do not report for evaluation with a valid reason.") { Alignment = Element.ALIGN_JUSTIFIED };
+                Paragraph p38 = new Paragraph(str: "      In this connection, I am to inform you that the Evaluation in the subject  " + dr2["subname"].ToString().ToUpper() + "(" + dr2["hesub"].ToString() + ") is scheduled to   commence  on dt. " + dr2["SDATE"].ToString() + " at your Centre and the work shall have to  be  completed  before dt. " + dr2["EDATE"].ToString() + "  positively.",hbold) { Alignment = Element.ALIGN_JUSTIFIED };
+                pdoc.Add(p38);
+                Paragraph p9 = new Paragraph(str: "      You must be aware that the Evaluation Work is very sensitive in nature and the future of the students is going to be  affected by the  manner in which the Evaluation is done.  Therefore, it is requested that due care, attention and complete  dedication should be given to  the  Evaluation  of  Answer  Books  by ensuring accuracy & uniformity as per  Marking  Scheme  and performance.  Also it may be noted that  the  work  assigned  to  you is strictly time  bound & confidential and the entire Post - Examination work will have a direct bearing for timely completion of Evaluation Work and subsequently scheduled declaration  of result.  You are therefore requested to complete the task including coordination work within prescirbed period i.e. 08-10 days time(maximum) positively.\n      Though  the  examiners  have  been  appointed  by the Regional Office, Patna, CBSE.  However, Head Examiner can make alternate arrangements in consultation with the CNS when  the  requisite no. of  examiners appointed by the Board do not report for evaluation with a valid reason.") { Alignment = Element.ALIGN_JUSTIFIED };
                 pdoc.Add(p9);
-                Paragraph p10 = new Paragraph(str: "      The Head  Examiners  will have to ensure that  such appointment is made strictly as per the qualifications of examiners given under rule 55(ii) of exam by  laws  and as per  guidelines  of  Spot Evaluation Term 2 Main Exam 2022.However details of the appointments made at local level be sent  to  the  Regional  Office  for necessary record and updations.") { Alignment = Element.ALIGN_JUSTIFIED };
+                Paragraph p10 = new Paragraph(str: "      The Head  Examiners  will have to ensure that  such appointment is made strictly as per the qualifications of examiners given under rule 55(ii) of exam by  laws  and as per  guidelines  of  Spot Evaluation Term 2 Main Exam 2022.However details of the appointments made at local level be sent  to  the  Regional  Office, Patna, CBSE  for necessary record and updations.") { Alignment = Element.ALIGN_JUSTIFIED };
                 pdoc.Add(p10);
                 pdoc.NewPage();
                 pdoc.Add(header); //Adding Header
@@ -153,13 +168,13 @@ namespace WindowsFormsApp1
                     Paragraph p12 = new Paragraph(str: "\n\n      The   teachers  appointed as  Examiners  have already been informed separately to contact you before the start of Evaluation Work on " + dr2["sdate"].ToString() + ".   You are also requested to confirm the status from all the Examiners and inform them the date of commencement of Evaluation Work to enable them to attend the task as per schedule and also ensure  that  maximum no. of Examiners  turn up for evaluation." + space + "  THE GUIDELINE FOR SPOT EVALUATION 2022 WILL BE FORWARDED IN ADVANCE TO  YOU FOR KIND  PERUSAL  AND  STRICT  COMPLIANCE  OF  THE  INSTRUCTIONS  AND   MAKING  ALL NECESSARY ARRANGEMENTS ACCORDINGLY.\n\n") { Alignment = Element.ALIGN_JUSTIFIED };
                     pdoc.Add(p12);
                 }
-                Paragraph p13 = new Paragraph(str: "\nNAME AND ADDRESS OF CHIEF NODAL SUPERVISOR/VENUE OF SPOT EVALUATION IS:") { Alignment = Element.ALIGN_LEFT };
+                Paragraph p13 = new Paragraph(str: "\nNAME AND ADDRESS OF CHIEF NODAL SUPERVISOR/VENUE OF SPOT EVALUATION IS:",hbold) { Alignment = Element.ALIGN_LEFT };
                 pdoc.Add(p13);
                 PdfPTable tbl3 = new PdfPTable(2);
                 tbl3.HorizontalAlignment = 1;
                 tbl3.DefaultCell.Border = 0;
-                tbl3.AddCell(new Phrase(str: "\n" + dr2["CNSNAME"].ToString() + "\nPOST-  PRINCIPAL\n(" + dr2["CNSSCH_NO"].ToString() + ") " + dr2["CNSADD1"].ToString() + "\n" + dr2["CNSADD2"].ToString() + "\n" + dr2["CNSADD3"].ToString() + "\n" + dr2["CNSADD4"].ToString() + "\n" + dr2["CNSADD5"].ToString() + "\nPIN: " + dr2["CNSPIN"].ToString() + "\n"));
-                tbl3.AddCell(new Phrase(str: "\n\nMobile :" + dr2["CNSmobile"].ToString() + "\n\nEmail : " + dr2["email"].ToString() + "\n"));
+                tbl3.AddCell(new Phrase(str: "\n" + dr2["CNSNAME"].ToString() + "\nPOST-  PRINCIPAL\n(" + dr2["CNSSCH_NO"].ToString() + ") " + dr2["CNSADD1"].ToString() + "\n" + dr2["CNSADD2"].ToString() + "\n" + dr2["CNSADD3"].ToString() + "\n" + dr2["CNSADD4"].ToString() + "\n" + dr2["CNSADD5"].ToString() + "\nPIN: " + dr2["CNSPIN"].ToString() + "\n",hbold));
+                tbl3.AddCell(new Phrase(str: "\n\nMobile :" + dr2["CNSmobile"].ToString() + "\n\nEmail : " + dr2["email"].ToString() + "\n",hbold));
                 pdoc.Add(tbl3);
                 pdoc.NewPage();
                 pdoc.Add(header); //Adding Header
