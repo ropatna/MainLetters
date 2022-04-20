@@ -90,7 +90,7 @@ namespace WindowsFormsApp1
                         Paragraph p33 = new Paragraph(str: "Examiner No: " + dr["SLNO"].ToString(),hbold) { Alignment = Element.ALIGN_RIGHT };
                         pdoc.Add(p33);
                         //Paragraph p5 = new Paragraph(str: dr["SLNO"].ToString() + "\nSchool No: " + dr["sch_no"].ToString() + "  " + dr["add1"].ToString() + "\n" + dr["add2"].ToString() + "\n" + dr["add3"].ToString() + "\n" + dr["add4"].ToString() + "\n" + dr["add5"].ToString() + "\nPIN: " + dr["pin"].ToString()) { Alignment = Element.ALIGN_LEFT };
-                        Paragraph p5 = new Paragraph(str: "School No: " + dr["sch_no"].ToString() + "\n" + dr["exabbrname"].ToString()) { Alignment = Element.ALIGN_LEFT };
+                        Paragraph p5 = new Paragraph(str: dr["name"].ToString() + "\nSchool No: " + dr["sch_no"].ToString() + "\n" + dr["exabbrname"].ToString()) { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p5);
                         Paragraph p6 = new Paragraph(str: "\nSUB.:  APPOINTMENT LETTER AND INTIMATION OF VENUE FOR SPOT EVALUATION FOR EXAMINERS IN THE SUBJECT " + dr2["subname"].ToString() + "(" + dr2["hesub"].ToString() + ") OF CLASS " + dr2["heclass"].ToString() + " Term 2 Exam 2022") { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p6);
@@ -98,7 +98,7 @@ namespace WindowsFormsApp1
                         pdoc.Add(p7);
                         Paragraph p8 = new Paragraph(str: "      I am to inform you that you have  been  appointed as  Examiner for Evaluation  of  Answer Books of the subject mentioned above for 2022 class " + dr2["heclass"].ToString() + " Term 2 Examinations.  The Evaluation work will be done at the following address.  The appointment as well as the information to  this  effect  will be kept strictly confidential by you.\n") { Alignment = Element.ALIGN_JUSTIFIED };
                         pdoc.Add(p8);
-                        Paragraph p1 = new Paragraph(str: "\nNAME AND ADDRESS OF CHIEF NODAL SUPERVISOR/VENUE OF SPOT EVALUATION") { Alignment = Element.ALIGN_LEFT };
+                        Paragraph p1 = new Paragraph(str: "\nNAME AND ADDRESS OF CHIEF NODAL SUPERVISOR/VENUE OF SPOT EVALUATION",hbold) { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p1);
                         PdfPTable tbl1 = new PdfPTable(2);
                         tbl1.HorizontalAlignment = 1;
@@ -106,7 +106,7 @@ namespace WindowsFormsApp1
                         tbl1.AddCell(new Phrase(str: "\n" + dr2["CNSNAME"].ToString() + "  PRINCIPAL\n(" + dr2["CNS_SCHNO"].ToString() + ") " + dr2["CNSADD1"].ToString() + "\n" + dr2["CNSADD2"].ToString() + "\n" + dr2["CNSADD3"].ToString() + "\n" + dr2["CNSADD4"].ToString() + "\n" + dr2["CNSADD5"].ToString() + "\nPIN: " + dr2["CNSPIN"].ToString() + "\n"));
                         tbl1.AddCell(new Phrase(str: "\n\nMobile :" + dr2["CNSmobile"].ToString() + "\n\nEmail : " + dr2["email"].ToString() + "\n"));
                         pdoc.Add(tbl1);
-                        Paragraph p9 = new Paragraph(str: "YOUR HEAD EXAMINER WILL BE :") { Alignment = Element.ALIGN_LEFT };
+                        Paragraph p9 = new Paragraph(str: "YOUR HEAD EXAMINER WILL BE :",hbold) { Alignment = Element.ALIGN_LEFT };
                         pdoc.Add(p9);
                         PdfPTable tbl2 = new PdfPTable(2);
                         tbl2.HorizontalAlignment = 1;
@@ -150,7 +150,7 @@ namespace WindowsFormsApp1
                         tbl3.AddCell(new Phrase("    Refreshment charges at the\n    Spot Evaluation Center"));
                         tbl3.AddCell(new Phrase(":  @Rs. 75/- per day"));
                         pdoc.Add(tbl3);
-                        Paragraph p16 = new Paragraph(str: "\n      Your acceptance as Examiner may please be sent to the  Head  Examiner immediately on receipt  of this letter.  You are also  required  to  produce a relieving certificate at the time joining / releiving issued accordingly.\n\n      Hope, you would pay proper attention towards most important  work of whole examination system and  ensure  error  free  evaluation as per  norms / guidelines of the Board in the larger academic interest of the students.") { Alignment = Element.ALIGN_JUSTIFIED };
+                        Paragraph p16 = new Paragraph(str: "\n      Your acceptance as Examiner may please be sent to the concerned Head  Examiner immediately on receipt  of this letter.  You are also  required  to  produce a relieving certificate at the time joining / releiving issued accordingly.\n\n      Hope, you would pay proper attention towards most important  work of whole examination system and  ensure  error  free  evaluation as per  norms / guidelines of the Board in the larger academic interest of the students.") { Alignment = Element.ALIGN_JUSTIFIED };
                         pdoc.Add(p16);
                         Paragraph p22 = new Paragraph(str: "\nYours faithfully,     \n") { Alignment = Element.ALIGN_RIGHT };
                         pdoc.Add(p22);
