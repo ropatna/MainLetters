@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
         {
             sqlcon.Open();
             SqlCommand cmd = new SqlCommand("", sqlcon);
-            string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "HEPAT2022");
+            string database = Microsoft.VisualBasic.Interaction.InputBox("ENTER NAME OF DATABASE FROM WHICH LETTER HAS TO BE GENERATED", "INPUT DATABASE NAME", "abc");
             if (String.IsNullOrEmpty(textBox2.Text))
             {
                 cmd = new SqlCommand("select * FROM [LETTERS].[dbo].[" + database + "]", sqlcon);

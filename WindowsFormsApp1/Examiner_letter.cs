@@ -26,11 +26,11 @@ namespace WindowsFormsApp1
             string database2 = "";
             string cls = Microsoft.VisualBasic.Interaction.InputBox("ENTER CLASS FOR WHICH LETTER HAS TO BE GENERATED", "INPUT CLASS", "");
             if(cls == "10"){
-                database = "exmhe1022t2";
+                database = "revexm10";
                 database2 = "hepat1022t2";
             }
             if(cls == "12"){
-                database = "exmhe2022t2";
+                database = "revexm12";
                 database2 = "hepat2022t2";
             }
             if (String.IsNullOrEmpty(textBox5.Text))
